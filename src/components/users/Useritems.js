@@ -1,9 +1,12 @@
-import React, { Component } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
-class Useritems extends Component {
+const Useritem =({user: {login , avatar_url , html_url}}) => {
  
-  render() {
-    const {login , avatar_url ,html_url}=this.props.user;
+  
+    // const {login , avatar_url ,html_url}=props.user;
+    // if we dont use the const to take out the value we can only take the info we want only we will call that in peranthises 
+    // instet of props in simple brackets
     return (
       <div className="card text-center"> 
       <img src={avatar_url} alt=""  className="round-img"style={{width:'60px'}}/>
@@ -13,7 +16,10 @@ class Useritems extends Component {
       </div>
       </div>
     )
-  }
+  
+}
+Useritem.propTypes ={
+ user: PropTypes.object.isRequired,
 }
 
-export default Useritems
+export default Useritem
