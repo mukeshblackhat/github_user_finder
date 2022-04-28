@@ -18,6 +18,7 @@ const Useritem =({user: {login , avatar_url , html_url}}) => {
     )
   
 }
+
 Useritem.propTypes ={
  user: PropTypes.object.isRequired,
 }
