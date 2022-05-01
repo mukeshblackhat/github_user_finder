@@ -6,7 +6,7 @@ const Navbar =({title})=> {
     return (
       <nav className='navbar bg-primary'>
           <h1>
-            <i className="fab fa-github"  />{title}
+            <i className="fab fa-github" style={{margin:'4px'}} />{title}
           </h1>
         
       </nav>
