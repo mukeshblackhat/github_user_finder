@@ -1,5 +1,5 @@
 import React , {Component, Fragment} from 'react';
-import {BrowserRouter as Router , Route , Routes} from 'react-router-dom'
+import {BrowserRouter as Router , Route , Switch} from 'react-router-dom'
 import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users'
 import Search from './components/users/Search'
@@ -59,10 +59,10 @@ class App extends Component {
         <Navbar title="github finder"/>
         <div className="container">
           <Alert alert={this.state.alert}/>
-          <Routes>
+          <Switch>
             <Route
-            exact path="/" render={
-              props=>(
+              exact path='/'
+             render ={props=>(
                 <Fragment>
                   <Search 
                     searchUsers={this.searchUsers} 
@@ -74,10 +74,10 @@ class App extends Component {
                    loading={loading} 
                    users={users} />
                 </Fragment>
-              )
+             )
             }
             />
-          </Routes>
+          </Switch>
           
 
           
