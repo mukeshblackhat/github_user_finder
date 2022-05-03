@@ -6,6 +6,7 @@ import Search from './components/users/Search'
 import './App.css';
 import axios from 'axios';
 import Alert from './components/layout/Alert'
+import About from './components/pages/About'
 
 class App extends Component {
   state={
@@ -77,6 +78,7 @@ class App extends Component {
              )
             }
             />
+            <Route exact path='/about' component={About}/>
           </Switch>
           
 
