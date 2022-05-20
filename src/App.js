@@ -2,6 +2,7 @@ import React , {Component, Fragment} from 'react';
 import {BrowserRouter as Router , Route , Switch} from 'react-router-dom'
 import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users'
+import User from './components/users/User'
 import Search from './components/users/Search'
 import './App.css';
 import axios from 'axios';
@@ -11,6 +12,7 @@ import About from './components/pages/About'
 class App extends Component {
   state={
     users:[],
+    user:{},
     loading:false,
     alert:null
   }
@@ -39,6 +41,17 @@ class App extends Component {
 
      
     }
+    //single user info 
+    getUser=async (username)=>{
+      this.setState({loading:true})//setting loading true till we get back our data as per requirement 
+      
+      const res = await axios
+       .get(`https://api.github.com/users/${username}?
+       client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}
+       &client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
+        
+        this.setState({user: res.data ,loading:false})
+    }
 
     //clearing users form state 
     clearUsers=()=>{
@@ -53,7 +66,7 @@ class App extends Component {
     }
 
   render(){
-    const {users , loading}=this.state;
+    const {users , loading ,user}=this.state;
     return (
       <Router>
       <div className="App">
@@ -79,6 +92,9 @@ class App extends Component {
             }
             />
             <Route exact path='/about' component={About}/>
+            <Route exact path='/user/:login' render={props=>(
+              <User {...props} getUser={this.getUser} user={user} loading={loading}/>
+            )} />
           </Switch>
           
 
