@@ -8,6 +8,7 @@ import './App.css';
 import axios from 'axios';
 import Alert from './components/layout/Alert'
 import About from './components/pages/About'
+import GithubState from './components/context/github/GithubState';
 
 const App=()=> {
   const [users , setUsers]=useState([]);
@@ -28,35 +29,10 @@ const App=()=> {
   //     setLoading(false)
   //   //  this.setState({users:res.data,loading:false}) //sending the data we got to the main state and reverting back loading to false after getting data 
   //   })
-    //searching github users 
-   const  searchUsers= async text=>{
-      
-      setLoading(true)//setting loading true till we get back our data as per requirement 
-      
-   const res = await axios
-    .get(`https://api.github.com/search/users?q=${text}
-    &client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}
-    &client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-     setUsers(res.data.items);
-     setLoading(false);
-     
-
-     
-    }
+  
+  
     //single user info 
-    const getUser=async (username)=>{
-      setLoading(true)
-      // this.setState({loading:true})//setting loading true till we get back our data as per requirement 
-      
-      const res = await axios
-       .get(`https://api.github.com/users/${username}?
-       client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}
-       &client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`);
-        
-        // this.setState({user: res.data ,loading:false})
-        setUser(res.data);
-        setLoading(false);
-    }
+  
 
     //get user repos 
     const getUserRepos=async (username)=>{
@@ -89,6 +65,7 @@ const App=()=> {
   
     // const {users , loading ,user ,repos}=this.state;
     return (
+      <GithubState>
       <Router>
       <div className="App">
         <Navbar title="github finder"/>
@@ -100,14 +77,12 @@ const App=()=> {
              render ={props=>(
                 <Fragment>
                   <Search 
-                    searchUsers={searchUsers} 
+                    // searchUsers={searchUsers} 
                     clearUsers={clearUsers} 
                     showClear={users.length>0?true:false} 
                     setAlert={showAlert}/>
 
-                 <Users 
-                   loading={loading} 
-                   users={users} />
+                 <Users/>
                 </Fragment>
              )
             }
@@ -116,7 +91,7 @@ const App=()=> {
             <Route exact path='/user/:login' render={props=>(
               <User 
                 {...props}
-                getUser={getUser}
+                // getUser={getUser}
                 getUserRepos={getUserRepos}
                 user={user} 
                 repos={repos}
@@ -133,6 +108,7 @@ const App=()=> {
         
       </div>
       </Router>
+        </GithubState>  
     );
 
   
